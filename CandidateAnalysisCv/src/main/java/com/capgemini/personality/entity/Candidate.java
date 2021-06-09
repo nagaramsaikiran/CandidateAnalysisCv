@@ -1,25 +1,34 @@
 package com.capgemini.personality.entity;
 
-
-
 import java.util.List;
 
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "CandidateDetails")
 public class Candidate {
 	private String name;
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int candidateId;
+	@Column(nullable=false,unique=true)
+	private String mobileNum;
+	@Column(nullable=false,unique=true)
+	private String emailId;
+	private Gender gender;
 	@OneToMany
+	@JoinTable(uniqueConstraints = @UniqueConstraint(columnNames = { "candidate_candidate_id", "skills_skill_id" }))
 	private List<Skill> skills;
-	@ManyToMany(mappedBy = "appliedCandidates")
+	@ManyToMany
 	private List<JobDetails> appliedJobs;
 	private int experience;
 
@@ -73,6 +82,30 @@ public class Candidate {
 
 	public void setAppliedJobs(List<JobDetails> appliedJobs) {
 		this.appliedJobs = appliedJobs;
+	}
+
+	public String getMobileNum() {
+		return mobileNum;
+	}
+
+	public void setMobileNum(String mobileNum) {
+		this.mobileNum = mobileNum;
+	}
+
+	public String getEmailId() {
+		return emailId;
+	}
+
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
+	}
+
+	public Gender getGender() {
+		return gender;
+	}
+
+	public void setGender(Gender gender) {
+		this.gender = gender;
 	}
 
 }

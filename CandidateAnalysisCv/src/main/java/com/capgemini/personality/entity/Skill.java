@@ -1,6 +1,8 @@
 package com.capgemini.personality.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
@@ -8,6 +10,7 @@ public class Skill {
 
 	private String skillName;
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int skillId;
 
 	public Skill() {

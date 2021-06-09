@@ -1,7 +1,5 @@
 package com.capgemini.personality.model;
 
-import javax.persistence.Id;
-
 public class SkillDTO {
 	private String skillName;
 	private int skillId;

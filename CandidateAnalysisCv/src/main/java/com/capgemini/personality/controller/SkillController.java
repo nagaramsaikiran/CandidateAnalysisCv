@@ -1,6 +1,7 @@
 package com.capgemini.personality.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capgemini.personality.entity.Skill;
+import com.capgemini.personality.exception.NotFoundException;
 import com.capgemini.personality.model.SkillDTO;
 import com.capgemini.personality.service.ISkillService;
 
@@ -21,12 +23,20 @@ public class SkillController {
 
 	@RequestMapping("/listskills")
 	public List<SkillDTO> getAllSkills() {
-		return skillService.getAllSkills();
+		List<SkillDTO> skills= skillService.getAllSkills();
+		if(skills.isEmpty()) {
+			throw new NotFoundException("No skills found");
+		}
+		return skills;
 	}
 
 	@RequestMapping("/getskills/{skillId}")
-	public SkillDTO getskill(@PathVariable int id) {
-		return skillService.getSkill(id);
+	public Optional<SkillDTO> getskill(@PathVariable("skillId") int id) {
+		Optional<SkillDTO> skill= Optional.ofNullable(skillService.getSkill(id));
+		if(skill.isPresent()) {
+			throw new NotFoundException("skill Id not found");
+		}
+		return skill;
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/addskills")
@@ -35,8 +45,9 @@ public class SkillController {
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, value = "/updateskills")
-	public SkillDTO updateskill(@RequestBody Skill skill) {
-		return skillService.updateSkill(skill);
+	public Skill updateskill(@RequestBody Skill skill) {
+		Optional<SkillDTO> skill1= Optional.ofNullable(skillService.getSkill(skill.getSkillId()));
+		return skill;
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, value = "/deleteskills/{skillId}")

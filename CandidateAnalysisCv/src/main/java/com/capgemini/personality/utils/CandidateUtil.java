@@ -23,6 +23,9 @@ public class CandidateUtil {
 		candidate.setSkills(candidatedto.getSkills());
 		candidate.setExperience(candidatedto.getExperience());
 		candidate.setAppliedJobs(candidatedto.getJobDetails());
+		candidate.setEmailId(candidatedto.getEmailId());
+		candidate.setMobileNum(candidatedto.getMobileNum());
+		candidate.setGender(candidatedto.getGender());
 		return candidate;
 	}
 
@@ -33,6 +36,9 @@ public class CandidateUtil {
 		candidateDTO.setSkills(candidate.getSkills());
 		candidateDTO.setExperience(candidate.getExperience());
 		candidateDTO.setJobDetails(candidate.getAppliedJobs());
+		candidateDTO.setEmailId(candidate.getEmailId());
+		candidateDTO.setMobileNum(candidate.getMobileNum());
+		candidateDTO.setGender(candidate.getGender());
 		return candidateDTO;
 	}
 

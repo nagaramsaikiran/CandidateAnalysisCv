@@ -3,23 +3,31 @@ package com.capgemini.personality.entity;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.UniqueConstraint;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "JobDetails")
 public class JobDetails {
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int jobId;
 	private String role;
 	@OneToMany
+	@JoinTable(uniqueConstraints = @UniqueConstraint(columnNames = { "job_details_job_id", "skills_skill_id" }))
 	private List<Skill> skills;
-	@ManyToMany
+	@ManyToMany(mappedBy = "appliedJobs")
 	private List<Candidate> appliedCandidates;
 	private int experience;
+
 	public int getJobId() {
 		return jobId;
 	}
@@ -64,6 +72,7 @@ public class JobDetails {
 		this.skills = skills;
 	}
 
+	@JsonIgnore
 	public List<Candidate> getAppliedCandidates() {
 		return appliedCandidates;
 	}
@@ -71,6 +80,5 @@ public class JobDetails {
 	public void setAppliedCandidates(List<Candidate> appliedCandidates) {
 		this.appliedCandidates = appliedCandidates;
 	}
-	
 
 }

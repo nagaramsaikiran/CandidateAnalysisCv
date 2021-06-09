@@ -1,6 +1,7 @@
 package com.capgemini.personality.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capgemini.personality.entity.JobDetails;
+import com.capgemini.personality.exception.NotFoundException;
 import com.capgemini.personality.model.JobDetailsDTO;
 import com.capgemini.personality.service.IJobDetailsService;
 
@@ -17,34 +19,48 @@ import com.capgemini.personality.service.IJobDetailsService;
 @RequestMapping("/apijobdetails")
 public class JobDetailsController {
 
+	@Autowired
+	private IJobDetailsService jobDetailsService;
 
-		@Autowired
-		private IJobDetailsService jobDetailsService;
+	@RequestMapping("/listjobdetails")
+	public List<JobDetailsDTO> getAllJobDetails() {
+		List<JobDetailsDTO> jobDetails= jobDetailsService.getAllJobDetails();
+		if(jobDetails.isEmpty()) {
+			throw new NotFoundException("No jobs Found");
+		}
+		return jobDetails;
+	}
 
-		@RequestMapping("/listjobdetails")
-		public List<JobDetailsDTO> getAllJobDetails() {
-			return jobDetailsService.getAllJobDetails();
+	@RequestMapping(method = RequestMethod.GET, value = "/getjobdetails/{jobId}")
+	public Optional<JobDetailsDTO> getJobDetails(@PathVariable("jobId") int id) {
+		Optional<JobDetailsDTO> jobDetails= Optional.ofNullable(jobDetailsService.getJobDetails(id));
+		if(!jobDetails.isPresent()) {
+			throw new NotFoundException("job id not found");
 		}
+		return jobDetails;
+	}
 
-		@RequestMapping("/getjobdetails/{jobId}")
-		public JobDetailsDTO getJobDetails(@PathVariable int id) {
-			return jobDetailsService.getJobDetails(id);
-			
-		}
+	@RequestMapping(method = RequestMethod.POST, value = "/addjobdetails")
+	public JobDetailsDTO addJobDetails(@RequestBody JobDetails jobDetails) {
+		return jobDetailsService.addJobDetails(jobDetails);
+	}
 
-		@RequestMapping(method = RequestMethod.POST, value = "/addjobdetails")
-		public JobDetailsDTO addJobDetails(@RequestBody JobDetails jobDetails) {
-			return jobDetailsService.addJobDetails(jobDetails);
+	@RequestMapping(method = RequestMethod.PUT, value = "/updatejobdetails")
+	public JobDetailsDTO updateCandidate(@RequestBody JobDetails jobDetails) {
+		Optional<JobDetailsDTO> jobDetails1=  Optional.ofNullable(jobDetailsService.getJobDetails(jobDetails.getJobId()));
+		if(!jobDetails1.isPresent()) {
+			throw new NotFoundException("job id not found");
 		}
-		
-		@RequestMapping(method = RequestMethod.PUT, value = "/updatejobdetails")
-		public JobDetailsDTO updateCandidate(@RequestBody JobDetails jobDetails) {
-			return jobDetailsService.updateJobDetails( jobDetails);
+		return jobDetailsService.updateJobDetails(jobDetails);
+	}
+
+	@RequestMapping(method = RequestMethod.DELETE, value = "/deletejobdetails/{jobId}")
+	public JobDetailsDTO deleteCandidate(int id) {
+		Optional<JobDetailsDTO> jobDetails= Optional.ofNullable(jobDetailsService.getJobDetails(id));
+		if(!jobDetails.isPresent()) {
+			throw new NotFoundException("job id not found");
 		}
-		
-		@RequestMapping(method = RequestMethod.DELETE, value = "/deletejobdetails/{jobId}")
-		public JobDetailsDTO deleteCandidate(int id) {
-			return jobDetailsService.deleteJobDetails(id);
-		}
+		return jobDetailsService.deleteJobDetails(id);
+	}
 
 }
