@@ -21,7 +21,7 @@ public class SkillController {
 	@Autowired
 	private ISkillService skillService;
 
-	@RequestMapping("/listskills")
+	@RequestMapping("getcandidates")
 	public List<SkillDTO> getAllSkills() {
 		List<SkillDTO> skills= skillService.getAllSkills();
 		if(skills.isEmpty()) {
