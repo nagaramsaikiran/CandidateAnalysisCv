@@ -3,6 +3,8 @@ package com.capgemini.personality.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +29,8 @@ public class CandidateController {
 
 	@Autowired
 	private ICandidateService candidateService;
+	Logger logger = LoggerFactory.getLogger(CandidateController.class);
+
 
 	@RequestMapping("/listcandidates")
 	public List<CandidateDTO> getAllCandidates() {
@@ -34,6 +38,7 @@ public class CandidateController {
 		if(candidates.isEmpty()) {
 			throw new NotFoundException("No candidates Found");
 		}
+		logger.info("Fetching All Candidates");
 		return candidates;
 	}
 
@@ -43,11 +48,13 @@ public class CandidateController {
 		if (!result.isPresent()) {
 			throw new NotFoundException("Candidate Not Found");
 		}
+		logger.info("Fetching candidate by Id");
 		return result;
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/addcandidate")
 	public CandidateDTO addCandidate(@RequestBody Candidate candidate) throws DataIntegrityViolationException {
+		logger.info("Candidate Added");
 		try {
 			return candidateService.addCandidate(candidate);
 		} catch (DataIntegrityViolationException e) {
@@ -61,6 +68,7 @@ public class CandidateController {
 		if (!result.isPresent()) {
 			throw new NotFoundException("Candidate Not Found");
 		}
+		logger.info("Updating the Candidate");
 		return candidateService.updateCandidate(candidate);
 	}
 
@@ -70,6 +78,7 @@ public class CandidateController {
 		if (!result.isPresent()) {
 			throw new NotFoundException("Candidate Not Found");
 		}
+		logger.info("Deleting the Candidate ");
 		return candidateService.deleteCandidate(id);
 	}
 }

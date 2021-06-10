@@ -3,6 +3,8 @@ package com.capgemini.personality.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +26,7 @@ import com.capgemini.personality.service.ISkillService;
 public class SkillController {
 	@Autowired
 	private ISkillService skillService;
+	Logger logger=LoggerFactory.getLogger(SkillController.class);
 
 	@RequestMapping("/getskills")
 	public List<SkillDTO> getAllSkills() {
@@ -31,6 +34,7 @@ public class SkillController {
 		if(skills.isEmpty()) {
 			throw new NotFoundException("No skills found");
 		}
+		logger.info("Fetching all Skills");
 		return skills;
 	}
 
@@ -40,11 +44,13 @@ public class SkillController {
 		if(!skill.isPresent()) {
 			throw new NotFoundException("skill Id not found");
 		}
+		logger.info("Fetching skill by Id");
 		return skill;
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/addskill")
 	public SkillDTO addskill(@RequestBody Skill skill) {
+		logger.info("Adding the skill");
 		return skillService.addSkill(skill);
 	}
 
@@ -54,6 +60,7 @@ public class SkillController {
 		if(!skill1.isPresent()) {
 			throw new NotFoundException("Skill Id Not Found");
 		}
+		logger.info("Updating the skill");
 		return skill;
 	}
 
@@ -63,6 +70,7 @@ public class SkillController {
 		if(!skill1.isPresent()) {
 			throw new NotFoundException("Skill Id Not Found");
 		}
+		logger.info("Deleting the skill");
 		return skillService.deleteSkill(id);
 	}
 

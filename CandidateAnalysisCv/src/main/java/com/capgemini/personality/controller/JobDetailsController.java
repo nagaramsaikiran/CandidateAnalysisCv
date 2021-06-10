@@ -3,6 +3,8 @@ package com.capgemini.personality.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +27,8 @@ public class JobDetailsController {
 
 	@Autowired
 	private IJobDetailsService jobDetailsService;
+	
+	Logger logger = LoggerFactory.getLogger(JobDetailsController.class);
 
 	@RequestMapping("/listjobdetails")
 	public List<JobDetailsDTO> getAllJobDetails() {
@@ -32,6 +36,7 @@ public class JobDetailsController {
 		if(jobDetails.isEmpty()) {
 			throw new NotFoundException("No jobs Found");
 		}
+		logger.info("Fetching All JobDetails");
 		return jobDetails;
 	}
 
@@ -41,11 +46,13 @@ public class JobDetailsController {
 		if(!jobDetails.isPresent()) {
 			throw new NotFoundException("job id not found");
 		}
+		logger.info("Fetching JobDetail with Id");
 		return jobDetails;
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/addjobdetails")
 	public JobDetailsDTO addJobDetails(@RequestBody JobDetails jobDetails) {
+		logger.info("JobDetail Added");
 		return jobDetailsService.addJobDetails(jobDetails);
 	}
 
@@ -55,6 +62,7 @@ public class JobDetailsController {
 		if(!jobDetails1.isPresent()) {
 			throw new NotFoundException("job id not found");
 		}
+		logger.info("JobDetail Updated");
 		return jobDetailsService.updateJobDetails(jobDetails);
 	}
 
