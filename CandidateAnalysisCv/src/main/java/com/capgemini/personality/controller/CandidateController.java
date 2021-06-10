@@ -16,7 +16,11 @@ import com.capgemini.personality.exception.ConstraintValidationException;
 import com.capgemini.personality.exception.NotFoundException;
 import com.capgemini.personality.model.CandidateDTO;
 import com.capgemini.personality.service.ICandidateService;
-
+/*@author name:Akhil and Rajitha
+ * date:07/06/2021
+ * Description:It processes the incoming requests regarding candidates
+ * Last modification date:09/06/2021
+ */
 @RestController
 @RequestMapping("/api")
 public class CandidateController {
@@ -33,8 +37,8 @@ public class CandidateController {
 		return candidates;
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/getcandidates/{candidateId}")
-	public Optional<CandidateDTO> getCandidate(@PathVariable("candidateId") int id) throws NotFoundException {
+	@RequestMapping(method = RequestMethod.GET, value = "/getcandidate/{candidateId}")
+	public Optional<CandidateDTO> getCandidate(@PathVariable("candidateId") Integer id) throws NotFoundException {
 		Optional<CandidateDTO> result = Optional.ofNullable(candidateService.getCandidate(id));
 		if (!result.isPresent()) {
 			throw new NotFoundException("Candidate Not Found");
@@ -61,7 +65,7 @@ public class CandidateController {
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, value = "/deletecandidate/{candidateId}")
-	public CandidateDTO deleteCandidate(int id) throws NotFoundException {
+	public CandidateDTO deleteCandidate(@PathVariable("candidateId") Integer id) throws NotFoundException {
 		Optional<CandidateDTO> result = Optional.ofNullable(candidateService.getCandidate(id));
 		if (!result.isPresent()) {
 			throw new NotFoundException("Candidate Not Found");

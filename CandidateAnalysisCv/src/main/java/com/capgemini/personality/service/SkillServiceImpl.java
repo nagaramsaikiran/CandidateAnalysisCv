@@ -9,6 +9,11 @@ import com.capgemini.personality.entity.Skill;
 import com.capgemini.personality.model.SkillDTO;
 import com.capgemini.personality.repository.ISkillRepository;
 import com.capgemini.personality.utils.SkillUtil;
+/*@author name:Nagaram Sai kiran
+ * date:05/06/2021
+ * Description:SkillService description
+ * Last modification date:09/06/2021
+ */
 @Service
 public class SkillServiceImpl  implements ISkillService{
 @Autowired
@@ -42,6 +47,7 @@ SkillUtil su;
 	@Override
 	public SkillDTO deleteSkill(int id) {
 		Skill skill=skillRepo.getById(id);
+		skillRepo.deleteById(id);
 		return su.convertToSkillDto(skill);
 	}
 

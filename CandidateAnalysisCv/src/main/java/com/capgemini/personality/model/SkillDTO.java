@@ -1,5 +1,9 @@
 package com.capgemini.personality.model;
-
+/*@author name:whole team
+ * date:04/06/2021
+ * Description:SkillDTO description
+ * Last modification date:09/06/2021
+ */
 public class SkillDTO {
 	private String skillName;
 	private int skillId;

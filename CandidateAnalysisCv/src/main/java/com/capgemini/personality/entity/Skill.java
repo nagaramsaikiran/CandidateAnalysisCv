@@ -1,10 +1,15 @@
 package com.capgemini.personality.entity;
 
 import javax.persistence.Entity;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+/*@author name:whole team
+ * date:03/06/2021
+ * Description:Skills description
+ * Last modification date:09/06/2021
+ */
 @Entity
 public class Skill {
 

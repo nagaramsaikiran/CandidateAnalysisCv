@@ -1,19 +1,19 @@
 package com.capgemini.personality.entity;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.UniqueConstraint;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.Table;
-
+/*@author name:whole team
+ * date:03/06/2021
+ * Description:Job Details description
+ * Last modification date:09/06/2021
+ */
 @Entity
 @Table(name = "JobDetails")
 public class JobDetails {
@@ -21,11 +21,10 @@ public class JobDetails {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int jobId;
 	private String role;
-	@OneToMany
-	@JoinTable(uniqueConstraints = @UniqueConstraint(columnNames = { "job_details_job_id", "skills_skill_id" }))
-	private List<Skill> skills;
+	@ManyToMany
+	private Set<Skill> skills;
 	@ManyToMany(mappedBy = "appliedJobs")
-	private List<Candidate> appliedCandidates;
+	private Set<Candidate> appliedCandidates;
 	private int experience;
 
 	public int getJobId() {
@@ -40,7 +39,7 @@ public class JobDetails {
 		super();
 	}
 
-	public JobDetails(int jobId, String role, List<Skill> skills, int experience) {
+	public JobDetails(int jobId, String role, Set<Skill> skills, int experience) {
 		super();
 		this.jobId = jobId;
 		this.role = role;
@@ -64,20 +63,20 @@ public class JobDetails {
 		this.experience = experience;
 	}
 
-	public List<Skill> getSkills() {
+	public Set<Skill> getSkills() {
 		return skills;
 	}
 
-	public void setSkills(List<Skill> skills) {
+	public void setSkills(Set<Skill> skills) {
 		this.skills = skills;
 	}
 
 	@JsonIgnore
-	public List<Candidate> getAppliedCandidates() {
+	public Set<Candidate> getAppliedCandidates() {
 		return appliedCandidates;
 	}
 
-	public void setAppliedCandidates(List<Candidate> appliedCandidates) {
+	public void setAppliedCandidates(Set<Candidate> appliedCandidates) {
 		this.appliedCandidates = appliedCandidates;
 	}
 

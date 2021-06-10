@@ -14,14 +14,18 @@ import com.capgemini.personality.entity.Skill;
 import com.capgemini.personality.exception.NotFoundException;
 import com.capgemini.personality.model.SkillDTO;
 import com.capgemini.personality.service.ISkillService;
-
+/*@author name:Nagaram sai kiran
+ * date:07/06/2021
+ * Description:It processes the incoming requests regarding skills
+ * Last modification date:09/06/2021
+ */
 @RestController
 @RequestMapping("/service")
 public class SkillController {
 	@Autowired
 	private ISkillService skillService;
 
-	@RequestMapping("getcandidates")
+	@RequestMapping("/getskills")
 	public List<SkillDTO> getAllSkills() {
 		List<SkillDTO> skills= skillService.getAllSkills();
 		if(skills.isEmpty()) {
@@ -30,28 +34,35 @@ public class SkillController {
 		return skills;
 	}
 
-	@RequestMapping("/getskills/{skillId}")
-	public Optional<SkillDTO> getskill(@PathVariable("skillId") int id) {
+	@RequestMapping("/getskill/{skillId}")
+	public Optional<SkillDTO> getskill(@PathVariable("skillId") Integer id) {
 		Optional<SkillDTO> skill= Optional.ofNullable(skillService.getSkill(id));
-		if(skill.isPresent()) {
+		if(!skill.isPresent()) {
 			throw new NotFoundException("skill Id not found");
 		}
 		return skill;
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/addskills")
+	@RequestMapping(method = RequestMethod.POST, value = "/addskill")
 	public SkillDTO addskill(@RequestBody Skill skill) {
 		return skillService.addSkill(skill);
 	}
 
-	@RequestMapping(method = RequestMethod.PUT, value = "/updateskills")
+	@RequestMapping(method = RequestMethod.PUT, value = "/updateskill")
 	public Skill updateskill(@RequestBody Skill skill) {
 		Optional<SkillDTO> skill1= Optional.ofNullable(skillService.getSkill(skill.getSkillId()));
+		if(!skill1.isPresent()) {
+			throw new NotFoundException("Skill Id Not Found");
+		}
 		return skill;
 	}
 
-	@RequestMapping(method = RequestMethod.DELETE, value = "/deleteskills/{skillId}")
-	public SkillDTO deleteskill(int id) {
+	@RequestMapping(method = RequestMethod.DELETE, value = "/deleteskill/{skillId}")
+	public SkillDTO deleteskill(@PathVariable("skillId") Integer id) {
+		Optional<SkillDTO> skill1= Optional.ofNullable(skillService.getSkill(id));
+		if(!skill1.isPresent()) {
+			throw new NotFoundException("Skill Id Not Found");
+		}
 		return skillService.deleteSkill(id);
 	}
 

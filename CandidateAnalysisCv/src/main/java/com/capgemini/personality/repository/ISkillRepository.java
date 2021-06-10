@@ -4,6 +4,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.capgemini.personality.entity.Skill;
+/*@author name:Nagaram Sai kiran
+ * date:05/06/2021
+ * Description:Creating candidate repository to perform crud operations and location for storing Modules
+ * Last modification date:09/06/2021
+ */
 @Repository
 public interface ISkillRepository extends JpaRepository<Skill, Integer> {
 

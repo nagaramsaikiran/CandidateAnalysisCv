@@ -1,6 +1,6 @@
 package com.capgemini.personality.entity;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +13,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+/*@author name:whole team
+ * date:03/06/2021
+ * Description:Candidate description
+ * 
+ */
 @Entity
 @Table(name = "CandidateDetails")
 public class Candidate {
@@ -25,11 +31,10 @@ public class Candidate {
 	@Column(nullable=false,unique=true)
 	private String emailId;
 	private Gender gender;
-	@OneToMany
-	@JoinTable(uniqueConstraints = @UniqueConstraint(columnNames = { "candidate_candidate_id", "skills_skill_id" }))
-	private List<Skill> skills;
 	@ManyToMany
-	private List<JobDetails> appliedJobs;
+	private Set<Skill> skills;
+	@ManyToMany
+	private Set<JobDetails> appliedJobs;
 	private int experience;
 
 	public Candidate() {
@@ -44,7 +49,7 @@ public class Candidate {
 		this.candidateId = candidateId;
 	}
 
-	public Candidate(String name, int candidateId, List<Skill> skills, int experience) {
+	public Candidate(String name, int candidateId, Set<Skill> skills, int experience) {
 		super();
 		this.name = name;
 		this.candidateId = candidateId;
@@ -68,19 +73,20 @@ public class Candidate {
 		this.experience = experience;
 	}
 
-	public List<Skill> getSkills() {
+	public Set<Skill> getSkills() {
 		return skills;
 	}
 
-	public void setSkills(List<Skill> skills) {
+	public void setSkills(Set<Skill> skills) {
 		this.skills = skills;
 	}
-
-	public List<JobDetails> getAppliedJobs() {
+    
+	@JsonIgnore
+	public Set<JobDetails> getAppliedJobs() {
 		return appliedJobs;
 	}
 
-	public void setAppliedJobs(List<JobDetails> appliedJobs) {
+	public void setAppliedJobs(Set<JobDetails> appliedJobs) {
 		this.appliedJobs = appliedJobs;
 	}
 

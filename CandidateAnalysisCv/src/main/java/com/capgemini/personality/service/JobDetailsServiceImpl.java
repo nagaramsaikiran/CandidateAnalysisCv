@@ -9,6 +9,11 @@ import com.capgemini.personality.entity.JobDetails;
 import com.capgemini.personality.model.JobDetailsDTO;
 import com.capgemini.personality.repository.IJobDetailsRepository;
 import com.capgemini.personality.utils.JobDetailsUtil;
+/*@author name:Aravind
+ * date:05/06/2021
+ * Description:JobDetailsService description
+ * Last modification date:09/06/2021
+ */
 @Service
 public class JobDetailsServiceImpl implements IJobDetailsService {
 @Autowired

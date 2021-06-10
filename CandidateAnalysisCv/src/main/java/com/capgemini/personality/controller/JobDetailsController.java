@@ -14,7 +14,11 @@ import com.capgemini.personality.entity.JobDetails;
 import com.capgemini.personality.exception.NotFoundException;
 import com.capgemini.personality.model.JobDetailsDTO;
 import com.capgemini.personality.service.IJobDetailsService;
-
+/*@author name:Aravind
+ * date:07/06/2021
+ * Description:It processes the incoming requests regarding JobDetails
+ * Last modification date:09/06/2021
+ */
 @RestController
 @RequestMapping("/apijobdetails")
 public class JobDetailsController {
@@ -32,7 +36,7 @@ public class JobDetailsController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/getjobdetails/{jobId}")
-	public Optional<JobDetailsDTO> getJobDetails(@PathVariable("jobId") int id) {
+	public Optional<JobDetailsDTO> getJobDetails(@PathVariable("jobId") Integer id) {
 		Optional<JobDetailsDTO> jobDetails= Optional.ofNullable(jobDetailsService.getJobDetails(id));
 		if(!jobDetails.isPresent()) {
 			throw new NotFoundException("job id not found");
@@ -55,7 +59,7 @@ public class JobDetailsController {
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, value = "/deletejobdetails/{jobId}")
-	public JobDetailsDTO deleteCandidate(int id) {
+	public JobDetailsDTO deleteCandidate(@PathVariable("jobId") Integer id) {
 		Optional<JobDetailsDTO> jobDetails= Optional.ofNullable(jobDetailsService.getJobDetails(id));
 		if(!jobDetails.isPresent()) {
 			throw new NotFoundException("job id not found");

@@ -1,11 +1,15 @@
 package com.capgemini.personality.model;
 
-import java.util.List;
+import java.util.Set;
 
 import com.capgemini.personality.entity.Gender;
 import com.capgemini.personality.entity.JobDetails;
 import com.capgemini.personality.entity.Skill;
-
+/*@author name:whole team
+ * date:04/06/2021
+ * Description:CandidateDTO description
+ * Last modification date:09/06/2021
+ */
 public class CandidateDTO {
 
 	private String name;
@@ -13,15 +17,15 @@ public class CandidateDTO {
 	private String mobileNum;
 	private String emailId;
 	private Gender gender;
-	private List<Skill> skills;
-	private List<JobDetails> jobDetails;
+	private Set<Skill> skills;
+	private Set<JobDetails> jobDetails;
 	private int experience;
 
 	public CandidateDTO() {
 		super();
 	}
 
-	public CandidateDTO(String name, int candidateId, List<Skill> skills, int experience) {
+	public CandidateDTO(String name, int candidateId, Set<Skill> skills, int experience) {
 		super();
 		this.name = name;
 		this.candidateId = candidateId;
@@ -53,19 +57,19 @@ public class CandidateDTO {
 		this.experience = experience;
 	}
 
-	public List<Skill> getSkills() {
+	public Set<Skill> getSkills() {
 		return skills;
 	}
 
-	public void setSkills(List<Skill> skills) {
+	public void setSkills(Set<Skill> skills) {
 		this.skills = skills;
 	}
 
-	public List<JobDetails> getJobDetails() {
+	public Set<JobDetails> getJobDetails() {
 		return jobDetails;
 	}
 
-	public void setJobDetails(List<JobDetails> jobDetails) {
+	public void setJobDetails(Set<JobDetails> jobDetails) {
 		this.jobDetails = jobDetails;
 	}
 

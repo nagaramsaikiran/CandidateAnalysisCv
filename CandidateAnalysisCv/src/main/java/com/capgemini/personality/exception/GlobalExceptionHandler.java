@@ -28,13 +28,7 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<>(ExceptionResponse, HttpStatus.NOT_FOUND);
 	}
 
-	@ExceptionHandler(DuplicateIdFoundException.class)
-	@ResponseStatus(value = HttpStatus.CONFLICT)
-	public ResponseEntity<Object> resourceNotFoundException(DuplicateIdFoundException ex, WebRequest request) {
-		ExceptionResponse ExceptionResponse = new ExceptionResponse(new Date(0), ex.getMessage(),
-				request.getDescription(false));
-		return new ResponseEntity<>(ExceptionResponse, HttpStatus.CONFLICT);
-	}
+
 
 	@ExceptionHandler(ConstraintValidationException.class)
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
